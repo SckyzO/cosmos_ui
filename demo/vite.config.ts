@@ -9,8 +9,9 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      // Inside the Docker container, packages/react/src is volume-mounted at /app/src/cosmos
-      // and styles/ is volume-mounted at /app/styles.
+      // Inside the Docker container:
+      //   packages/react/src → /app/src/cosmos  (volume mount)
+      //   styles/            → /app/styles       (volume mount)
       '@cosmos': '/app/src/cosmos',
       '@cosmos-styles': '/app/styles',
     },

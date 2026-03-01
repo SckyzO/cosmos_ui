@@ -1,9 +1,5 @@
 import type { StorybookConfig } from '@storybook/react-vite';
-import { fileURLToPath } from 'url';
 import path from 'path';
-
-// __dirname equivalent for ESM modules
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
  * Storybook 8 + Vite + React 19 + Tailwind CSS v4
@@ -12,19 +8,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
  * It is injected via viteFinal so Storybook's internal Vite instance
  * picks it up alongside our @cosmos path alias.
  *
- * Path strategy:
- * - Docker: COSMOS_SRC_PATH env var overrides (set in docker-compose.dev.yml)
- * - CI / local build: path.resolve(__dirname, ...) → correct repo-relative path
+ * Path resolution:
+ * Storybook processes main.ts with esbuild-register (CJS mode), so __dirname
+ * is always the .storybook/ directory in both Docker and CI environments.
+ * In Docker: /app/.storybook/ → ../packages/react/src = /app/packages/react/src
+ * In CI:     {repo}/.storybook/ → ../packages/react/src = {repo}/packages/react/src
  */
-
-const COSMOS_SRC = process.env.COSMOS_SRC_PATH ?? path.resolve(__dirname, '../packages/react/src');
-const COSMOS_STYLES = process.env.COSMOS_STYLES_PATH ?? path.resolve(__dirname, '../styles');
-
 const config: StorybookConfig = {
   stories: [
-    // Paths are relative to this config directory (.storybook/).
-    // '../packages/react/src/**/*' → component stories (CI and Docker)
-    // './stories/**/*'             → standalone stories
     '../packages/react/src/**/*.stories.@(ts|tsx)',
     './stories/**/*.stories.@(ts|tsx)',
     '../packages/react/src/**/*.mdx',
@@ -32,9 +23,9 @@ const config: StorybookConfig = {
   ],
 
   addons: [
-    '@storybook/addon-essentials',   // docs, controls, actions, viewport, backgrounds
-    '@storybook/addon-interactions', // interaction testing
-    '@storybook/addon-a11y',         // accessibility checks
+    '@storybook/addon-essentials',
+    '@storybook/addon-interactions',
+    '@storybook/addon-a11y',
   ],
 
   framework: {
@@ -50,15 +41,18 @@ const config: StorybookConfig = {
     const { mergeConfig } = await import('vite');
     const tailwindcss = (await import('@tailwindcss/vite')).default;
 
+    // __dirname = .storybook/ directory (CJS context via esbuild-register)
+    const cosmosRoot = path.resolve(__dirname, '../packages/react/src');
+    const stylesRoot = path.resolve(__dirname, '../styles');
+
     return mergeConfig(config, {
       plugins: [tailwindcss()],
       resolve: {
         alias: {
-          '@cosmos': COSMOS_SRC,
-          '@cosmos-styles': COSMOS_STYLES,
+          '@cosmos': cosmosRoot,
+          '@cosmos-styles': stylesRoot,
         },
-        // Deduplicate React to prevent "React is not defined" errors caused by
-        // multiple React instances (Storybook's own + our components).
+        // Deduplicate React to prevent "React is not defined" from multiple instances.
         dedupe: ['react', 'react-dom', 'react/jsx-runtime'],
       },
     });

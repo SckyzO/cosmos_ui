@@ -2,7 +2,6 @@
   "name": "cosmos-storybook",
   "private": true,
   "version": "0.1.0",
-  "type": "module",
   "scripts": {
     "storybook": "storybook dev --port 6006 --host 0.0.0.0 --no-open --config-dir .",
     "build-storybook": "storybook build --config-dir ."

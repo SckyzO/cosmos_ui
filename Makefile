@@ -6,7 +6,7 @@ COMPOSE := docker compose -f docker-compose.dev.yml
 # ── Stack ──────────────────────────────────────────────────────────────────────
 up:
 	$(COMPOSE) up -d
-	@echo "✅ Demo:      http://localhost:5173"
+	@echo "✅ Demo:      http://localhost:5174"
 	@echo "✅ Storybook: http://localhost:6006"
 
 down:

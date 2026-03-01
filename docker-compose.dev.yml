@@ -4,7 +4,7 @@ services:
       context: ./demo
       dockerfile: Dockerfile
     ports:
-      - "5173:5173"
+      - "5174:5173"
     volumes:
       - ./demo:/app
       - ./packages/react/src:/app/src/cosmos

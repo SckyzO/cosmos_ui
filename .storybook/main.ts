@@ -2,17 +2,14 @@ import type { StorybookConfig } from '@storybook/react-vite';
 import path from 'path';
 
 /**
- * Storybook 8 + Vite + React 19 + Tailwind CSS v4
+ * Storybook 8.6.17 + Vite + React 19 + Tailwind CSS v4
  *
  * Tailwind v4 uses the @tailwindcss/vite plugin (not PostCSS).
- * It is injected via viteFinal so Storybook's internal Vite instance
- * picks it up alongside our @cosmos path alias.
+ * Injected via viteFinal alongside the @cosmos path alias.
  *
- * Path resolution:
- * Storybook processes main.ts with esbuild-register (CJS mode), so __dirname
- * is always the .storybook/ directory in both Docker and CI environments.
- * In Docker: /app/.storybook/ → ../packages/react/src = /app/packages/react/src
- * In CI:     {repo}/.storybook/ → ../packages/react/src = {repo}/packages/react/src
+ * Path resolution: __dirname = .storybook/ directory (CJS via esbuild-register)
+ * - Docker container: /app/.storybook/ → /app/packages/react/src
+ * - GitHub CI:        {repo}/.storybook/ → {repo}/packages/react/src
  */
 const config: StorybookConfig = {
   stories: [
@@ -41,7 +38,6 @@ const config: StorybookConfig = {
     const { mergeConfig } = await import('vite');
     const tailwindcss = (await import('@tailwindcss/vite')).default;
 
-    // __dirname = .storybook/ directory (CJS context via esbuild-register)
     const cosmosRoot = path.resolve(__dirname, '../packages/react/src');
     const stylesRoot = path.resolve(__dirname, '../styles');
 
@@ -52,8 +48,10 @@ const config: StorybookConfig = {
           '@cosmos': cosmosRoot,
           '@cosmos-styles': stylesRoot,
         },
-        // Deduplicate React to prevent "React is not defined" from multiple instances.
-        dedupe: ['react', 'react-dom', 'react/jsx-runtime'],
+        // NOTE: dedupe removed — it interfered with Storybook's internal
+        // module resolution (storybook/internal/preview/runtime).
+        // The 'React is not defined' issue is handled by ensuring React 19's
+        // automatic JSX transform is active via @storybook/react-vite.
       },
     });
   },

@@ -1,20 +1,45 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import {
-  LayoutDashboard,
-  Palette,
-  Type,
-  Square,
-  ToggleLeft,
-  Table2,
-  BarChart2,
-  Bell,
-  Layout,
-  Settings,
-} from 'lucide-react';
+import { LayoutDashboard, Palette, Settings, Square } from 'lucide-react';
 import { CosmosLayout } from '@cosmos/components/layout/CosmosLayout';
 import { useTheme, ACCENTS, LIGHT_THEMES, DARK_THEMES } from '@cosmos/contexts/ThemeContext';
 import type { NavSection } from '@cosmos/components/layout/CosmosSidebar';
 import '@cosmos-styles/app.css';
+
+// ── UI Library pages ──────────────────────────────────────────────────────────
+
+import { UILibraryPage } from './pages/UILibraryPage';
+import { AccordionPage } from './pages/ui/AccordionPage';
+import { AlertsPage } from './pages/ui/AlertsPage';
+import { AvatarsPage } from './pages/ui/AvatarsPage';
+import { BadgesPage } from './pages/ui/BadgesPage';
+import { BreadcrumbPage } from './pages/ui/BreadcrumbPage';
+import { ButtonsGroupPage } from './pages/ui/ButtonsGroupPage';
+import { ButtonsPage } from './pages/ui/ButtonsPage';
+import { CardsPage } from './pages/ui/CardsPage';
+import { CarouselPage } from './pages/ui/CarouselPage';
+import { DrawerPage } from './pages/ui/DrawerPage';
+import { DropdownsPage } from './pages/ui/DropdownsPage';
+import { EmptyStatePage } from './pages/ui/EmptyStatePage';
+import { FormElementsPage } from './pages/ui/FormElementsPage';
+import { LinksPage } from './pages/ui/LinksPage';
+import { ListPage } from './pages/ui/ListPage';
+import { ModalsPage } from './pages/ui/ModalsPage';
+import { NotificationsPage } from './pages/ui/NotificationsPage';
+import { OtpInputPage } from './pages/ui/OtpInputPage';
+import { PaginationPage } from './pages/ui/PaginationPage';
+import { PopoversPage } from './pages/ui/PopoversPage';
+import { ProgressBarPage } from './pages/ui/ProgressBarPage';
+import { RangeSliderPage } from './pages/ui/RangeSliderPage';
+import { RibbonsPage } from './pages/ui/RibbonsPage';
+import { SkeletonPage } from './pages/ui/SkeletonPage';
+import { SpinnersPage } from './pages/ui/SpinnersPage';
+import { StatsCardsPage } from './pages/ui/StatsCardsPage';
+import { StepperPage } from './pages/ui/StepperPage';
+import { TabsPage } from './pages/ui/TabsPage';
+import { TagInputPage } from './pages/ui/TagInputPage';
+import { TimelinePage } from './pages/ui/TimelinePage';
+import { ToastPage } from './pages/ui/ToastPage';
+import { TooltipsPage } from './pages/ui/TooltipsPage';
 
 // ── Nav config ────────────────────────────────────────────────────────────────
 
@@ -22,20 +47,10 @@ const NAV: NavSection[] = [
   {
     id: 'main',
     label: 'Overview',
-    items: [{ to: '/', icon: LayoutDashboard, label: 'Dashboard', end: true }],
-  },
-  {
-    id: 'theme',
-    label: 'Design System',
     items: [
+      { to: '/', icon: LayoutDashboard, label: 'Dashboard', end: true },
       { to: '/theme', icon: Palette, label: 'Theme & Colors' },
-      { to: '/typography', icon: Type, label: 'Typography' },
-      { to: '/components', icon: Square, label: 'Components' },
-      { to: '/forms', icon: ToggleLeft, label: 'Form Elements' },
-      { to: '/tables', icon: Table2, label: 'Data Tables' },
-      { to: '/charts', icon: BarChart2, label: 'Charts' },
-      { to: '/feedback', icon: Bell, label: 'Feedback' },
-      { to: '/layout', icon: Layout, label: 'Layout Patterns' },
+      { to: '/ui', icon: Square, label: 'UI Library' },
     ],
   },
   {
@@ -61,7 +76,7 @@ function DashboardPage() {
         {[
           {
             label: 'Components',
-            value: '50+',
+            value: '32',
             color: 'bg-brand-50 text-brand-600 dark:bg-brand-500/10 dark:text-brand-400',
           },
           {
@@ -75,8 +90,8 @@ function DashboardPage() {
             color: 'bg-violet-50 text-violet-600 dark:bg-violet-500/10 dark:text-violet-400',
           },
           {
-            label: 'Icons',
-            value: '∞',
+            label: 'HTML Templates',
+            value: '✓',
             color: 'bg-rose-50 text-rose-600 dark:bg-rose-500/10 dark:text-rose-400',
           },
         ].map((card) => (
@@ -86,7 +101,7 @@ function DashboardPage() {
           >
             <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{card.label}</p>
             <p
-              className={`mt-2 text-3xl font-bold ${card.color} inline-block rounded-lg px-2 py-0.5`}
+              className={`mt-2 inline-block rounded-lg px-2 py-0.5 text-3xl font-bold ${card.color}`}
             >
               {card.value}
             </p>
@@ -99,8 +114,11 @@ function DashboardPage() {
           Getting started
         </h3>
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          Navigate the sidebar to explore the design system. Use the theme selector (Settings →
-          Appearance) to switch between dark/light palettes and accent colors. Try typing{' '}
+          Navigate the sidebar to explore the design system. Use{' '}
+          <strong className="text-gray-900 dark:text-white">Theme & Colors</strong> to switch
+          palettes and accents. Browse{' '}
+          <strong className="text-gray-900 dark:text-white">UI Library</strong> for all 32
+          components. Try typing{' '}
           <kbd className="rounded border border-gray-200 bg-gray-100 px-1.5 py-0.5 font-mono text-xs dark:border-gray-700 dark:bg-gray-800">
             help
           </kbd>{' '}
@@ -124,7 +142,6 @@ function ThemePage() {
         </p>
       </div>
 
-      {/* Mode toggle */}
       <section className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
         <h3 className="mb-4 text-base font-semibold text-gray-900 dark:text-white">Mode</h3>
         <div className="flex gap-3">
@@ -144,7 +161,6 @@ function ThemePage() {
         </div>
       </section>
 
-      {/* Accent */}
       <section className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
         <h3 className="mb-4 text-base font-semibold text-gray-900 dark:text-white">Accent color</h3>
         <div className="flex gap-3">
@@ -164,7 +180,6 @@ function ThemePage() {
         </div>
       </section>
 
-      {/* Light palettes */}
       <section className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
         <h3 className="mb-4 text-base font-semibold text-gray-900 dark:text-white">
           Light palettes
@@ -192,7 +207,6 @@ function ThemePage() {
         </div>
       </section>
 
-      {/* Dark palettes */}
       <section className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
         <h3 className="mb-4 text-base font-semibold text-gray-900 dark:text-white">
           Dark palettes
@@ -220,7 +234,6 @@ function ThemePage() {
         </div>
       </section>
 
-      {/* Brand palette */}
       <section className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
         <h3 className="mb-4 text-base font-semibold text-gray-900 dark:text-white">
           Brand palette
@@ -263,17 +276,47 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<CosmosLayout navSections={NAV} appName="cosmos_ui" title="cosmos_ui" />}>
+        <Route element={<CosmosLayout navSections={NAV} appName="cosmos_ui" />}>
           <Route index element={<DashboardPage />} />
           <Route path="theme" element={<ThemePage />} />
-          <Route path="typography" element={<PlaceholderPage title="Typography" />} />
-          <Route path="components" element={<PlaceholderPage title="Components" />} />
-          <Route path="forms" element={<PlaceholderPage title="Form Elements" />} />
-          <Route path="tables" element={<PlaceholderPage title="Data Tables" />} />
-          <Route path="charts" element={<PlaceholderPage title="Charts" />} />
-          <Route path="feedback" element={<PlaceholderPage title="Feedback" />} />
-          <Route path="layout" element={<PlaceholderPage title="Layout Patterns" />} />
           <Route path="settings" element={<PlaceholderPage title="Settings" />} />
+
+          {/* UI Library hub */}
+          <Route path="ui" element={<UILibraryPage />} />
+
+          {/* 32 UI component pages */}
+          <Route path="ui/accordion" element={<AccordionPage />} />
+          <Route path="ui/alerts" element={<AlertsPage />} />
+          <Route path="ui/avatars" element={<AvatarsPage />} />
+          <Route path="ui/badges" element={<BadgesPage />} />
+          <Route path="ui/breadcrumb" element={<BreadcrumbPage />} />
+          <Route path="ui/buttons-group" element={<ButtonsGroupPage />} />
+          <Route path="ui/buttons" element={<ButtonsPage />} />
+          <Route path="ui/cards" element={<CardsPage />} />
+          <Route path="ui/carousel" element={<CarouselPage />} />
+          <Route path="ui/drawer" element={<DrawerPage />} />
+          <Route path="ui/dropdowns" element={<DropdownsPage />} />
+          <Route path="ui/empty-state" element={<EmptyStatePage />} />
+          <Route path="ui/form-elements" element={<FormElementsPage />} />
+          <Route path="ui/links" element={<LinksPage />} />
+          <Route path="ui/list" element={<ListPage />} />
+          <Route path="ui/modals" element={<ModalsPage />} />
+          <Route path="ui/notifications" element={<NotificationsPage />} />
+          <Route path="ui/otp-input" element={<OtpInputPage />} />
+          <Route path="ui/pagination" element={<PaginationPage />} />
+          <Route path="ui/popovers" element={<PopoversPage />} />
+          <Route path="ui/progress-bar" element={<ProgressBarPage />} />
+          <Route path="ui/range-slider" element={<RangeSliderPage />} />
+          <Route path="ui/ribbons" element={<RibbonsPage />} />
+          <Route path="ui/skeleton" element={<SkeletonPage />} />
+          <Route path="ui/spinners" element={<SpinnersPage />} />
+          <Route path="ui/stats-cards" element={<StatsCardsPage />} />
+          <Route path="ui/stepper" element={<StepperPage />} />
+          <Route path="ui/tabs" element={<TabsPage />} />
+          <Route path="ui/tag-input" element={<TagInputPage />} />
+          <Route path="ui/timeline" element={<TimelinePage />} />
+          <Route path="ui/toast" element={<ToastPage />} />
+          <Route path="ui/tooltips" element={<TooltipsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

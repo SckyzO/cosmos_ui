@@ -4,6 +4,7 @@
 
 Dark mode first-class, accent colors, comprehensive component library — available as React components and pure HTML templates.
 
+[![Storybook](https://img.shields.io/badge/Storybook-Live-FF4785?logo=storybook&logoColor=white)](https://sckyzo.github.io/cosmos_ui/)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Tailwind CSS](https://img.shields.io/badge/tailwindcss-v4-06B6D4.svg)
 ![React](https://img.shields.io/badge/react-19-61DAFB.svg)

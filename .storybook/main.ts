@@ -47,6 +47,9 @@ const config: StorybookConfig = {
           '@cosmos': '/app/src/cosmos',
           '@cosmos-styles': '/app/styles',
         },
+        // Deduplicate React to prevent "React is not defined" errors caused by
+        // multiple React instances (Storybook's own + our components).
+        dedupe: ['react', 'react-dom', 'react/jsx-runtime'],
       },
     });
   },

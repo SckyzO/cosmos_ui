@@ -1,149 +1,408 @@
+import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Square,
-  Tag,
-  Bell,
-  List,
-  Navigation,
-  BarChart2,
-  ToggleLeft,
-  Layers,
-  ChevronRight,
-  Loader2,
-  AlignLeft,
-  RotateCcw,
-  Hash,
-  Clock,
-  Volume2,
-  Info,
-  User,
-  LayoutGrid,
-  SlidersHorizontal,
-  Code2,
-  Minus,
-  PanelRight,
-  CreditCard,
-  Image,
-  Table2,
-  Calendar,
-  LogIn,
-  UserPlus,
-} from 'lucide-react';
+import { ChevronRight, Search, X } from 'lucide-react';
 import { PageHeader, PageBreadcrumb } from '../components/ui-showcase';
 
-const SECTIONS = [
+// ── Types ─────────────────────────────────────────────────────────────────────
+
+interface ComponentEntry {
+  name: string;
+  description: string;
+  route: string;
+  tag?: string; // optional sub-label (e.g. chart type)
+}
+
+interface CategorySection {
+  id: string;
+  title: string;
+  color: string; // accent color for the dot indicator
+  items: ComponentEntry[];
+}
+
+// ── Category data ─────────────────────────────────────────────────────────────
+
+const CATEGORIES: CategorySection[] = [
   {
-    title: 'Actions',
+    id: 'components',
+    title: 'Components',
+    color: '#465fff',
     items: [
-      { label: 'Buttons', path: '/ui/buttons', icon: Square },
-      { label: 'Button Group', path: '/ui/buttons-group', icon: LayoutGrid },
-      { label: 'Dropdowns', path: '/ui/dropdowns', icon: ChevronRight },
+      { name: 'Badges', description: 'Status and label pills', route: '/ui/badges' },
+      { name: 'Alerts', description: 'Contextual feedback messages', route: '/ui/alerts' },
+      {
+        name: 'Buttons',
+        description: 'Primary, secondary, icon, sizes, states',
+        route: '/ui/buttons',
+      },
+      {
+        name: 'Buttons Group',
+        description: 'Grouped buttons sharing a container',
+        route: '/ui/buttons-group',
+      },
+      { name: 'Cards', description: 'Content container cards', route: '/ui/cards' },
+      { name: 'Modals', description: 'Dialog overlays', route: '/ui/modals' },
+      { name: 'Drawers', description: 'Slide-in side panels', route: '/ui/drawer' },
+      {
+        name: 'Dropdowns',
+        description: 'Context menus and selects',
+        route: '/ui/dropdowns',
+      },
+      { name: 'Tooltips', description: 'Hover information hints', route: '/ui/tooltips' },
+      { name: 'Popovers', description: 'Rich hover content panels', route: '/ui/popovers' },
     ],
   },
   {
-    title: 'Display',
-    items: [
-      { label: 'Badges', path: '/ui/badges', icon: Tag },
-      { label: 'Alerts', path: '/ui/alerts', icon: Bell },
-      { label: 'Cards', path: '/ui/cards', icon: CreditCard },
-      { label: 'Ribbons', path: '/ui/ribbons', icon: Tag },
-      { label: 'Stats Cards', path: '/ui/stats-cards', icon: BarChart2 },
-      { label: 'Carousel', path: '/ui/carousel', icon: Image },
-    ],
-  },
-  {
-    title: 'Navigation',
-    items: [
-      { label: 'Breadcrumb', path: '/ui/breadcrumb', icon: Navigation },
-      { label: 'Pagination', path: '/ui/pagination', icon: List },
-      { label: 'Links', path: '/ui/links', icon: AlignLeft },
-      { label: 'Tabs', path: '/ui/tabs', icon: Layers },
-      { label: 'Stepper', path: '/ui/stepper', icon: Hash },
-    ],
-  },
-  {
-    title: 'Overlay',
-    items: [
-      { label: 'Modals', path: '/ui/modals', icon: Square },
-      { label: 'Popovers', path: '/ui/popovers', icon: Info },
-      { label: 'Tooltips', path: '/ui/tooltips', icon: Info },
-      { label: 'Drawer', path: '/ui/drawer', icon: PanelRight },
-      { label: 'Toast', path: '/ui/toast', icon: Volume2 },
-      { label: 'Notifications', path: '/ui/notifications', icon: Bell },
-    ],
-  },
-  {
+    id: 'forms',
     title: 'Forms',
+    color: '#8b5cf6',
     items: [
-      { label: 'Form Elements', path: '/ui/form-elements', icon: ToggleLeft },
-      { label: 'Tag Input', path: '/ui/tag-input', icon: Tag },
-      { label: 'Range Slider', path: '/ui/range-slider', icon: SlidersHorizontal },
-      { label: 'OTP Input', path: '/ui/otp-input', icon: Code2 },
+      {
+        name: 'Form Elements',
+        description: 'Inputs, selects, checkboxes',
+        route: '/ui/form-elements',
+      },
+      { name: 'OTP Input', description: 'One-time password entry', route: '/ui/otp-input' },
+      {
+        name: 'Range Slider',
+        description: 'Numeric range selector',
+        route: '/ui/range-slider',
+      },
+      { name: 'Tag Input', description: 'Multi-value token input', route: '/ui/tag-input' },
     ],
   },
   {
+    id: 'charts',
+    title: 'Charts',
+    color: '#10b981',
+    items: [
+      {
+        name: 'Line & Area',
+        description: 'Smooth area chart with gradient fill',
+        route: '/charts',
+        tag: 'area',
+      },
+      {
+        name: 'Bar & Column',
+        description: 'Grouped or stacked column chart',
+        route: '/charts',
+        tag: 'bar',
+      },
+      {
+        name: 'Pie & Donut',
+        description: 'Simple, monochrome, gradient, pattern',
+        route: '/charts',
+        tag: 'pie',
+      },
+      {
+        name: 'Radial Bar',
+        description: 'Multi-series radial gauges',
+        route: '/charts',
+        tag: 'radialBar',
+      },
+      {
+        name: 'Semi-circle Gauge',
+        description: 'Half-circle KPI gauge',
+        route: '/charts',
+        tag: 'gauge',
+      },
+      {
+        name: 'Heatmap',
+        description: 'Intensity grid for data visualization',
+        route: '/charts',
+        tag: 'heatmap',
+      },
+      {
+        name: 'Mixed Chart',
+        description: 'Area + column combo',
+        route: '/charts',
+        tag: 'mixed',
+      },
+      {
+        name: 'Realtime',
+        description: 'Live data with threshold annotations',
+        route: '/charts',
+        tag: 'realtime',
+      },
+    ],
+  },
+  {
+    id: 'data',
+    title: 'Data Display',
+    color: '#f59e0b',
+    items: [
+      {
+        name: 'Stats Cards',
+        description: 'KPI metric summary cards',
+        route: '/ui/stats-cards',
+      },
+      {
+        name: 'Data Tables',
+        description: 'Sortable and filterable tables',
+        route: '/tables',
+      },
+      { name: 'Avatars', description: 'User and entity avatars', route: '/ui/avatars' },
+      { name: 'Ribbons', description: 'Corner ribbon decorations', route: '/ui/ribbons' },
+      { name: 'List', description: 'Structured list items', route: '/ui/list' },
+      { name: 'Links', description: 'Styled anchor variants', route: '/ui/links' },
+    ],
+  },
+  {
+    id: 'navigation',
+    title: 'Navigation',
+    color: '#06b6d4',
+    items: [
+      { name: 'Tabs', description: 'Horizontal tab switcher', route: '/ui/tabs' },
+      {
+        name: 'Pagination',
+        description: 'Page navigation controls',
+        route: '/ui/pagination',
+      },
+      {
+        name: 'Breadcrumb',
+        description: 'Hierarchical path trail',
+        route: '/ui/breadcrumb',
+      },
+      {
+        name: 'Accordion',
+        description: 'Collapsible content sections',
+        route: '/ui/accordion',
+      },
+      { name: 'Stepper', description: 'Multi-step wizard flow', route: '/ui/stepper' },
+    ],
+  },
+  {
+    id: 'feedback',
     title: 'Feedback',
+    color: '#ef4444',
     items: [
-      { label: 'Spinners', path: '/ui/spinners', icon: Loader2 },
-      { label: 'Progress Bar', path: '/ui/progress-bar', icon: Minus },
-      { label: 'Skeleton', path: '/ui/skeleton', icon: RotateCcw },
-      { label: 'Empty State', path: '/ui/empty-state', icon: Square },
+      { name: 'Toast', description: 'Transient notification toasts', route: '/ui/toast' },
+      { name: 'Spinners', description: 'Loading indicators', route: '/ui/spinners' },
+      {
+        name: 'Skeleton',
+        description: 'Content loading placeholders',
+        route: '/ui/skeleton',
+      },
+      {
+        name: 'Progress Bar',
+        description: 'Linear progress indicator',
+        route: '/ui/progress-bar',
+      },
+      {
+        name: 'Empty State',
+        description: 'No-data placeholder views',
+        route: '/ui/empty-state',
+      },
     ],
   },
   {
-    title: 'Content',
+    id: 'advanced',
+    title: 'Advanced',
+    color: '#6366f1',
     items: [
-      { label: 'Avatars', path: '/ui/avatars', icon: User },
-      { label: 'List', path: '/ui/list', icon: List },
-      { label: 'Timeline', path: '/ui/timeline', icon: Clock },
-      { label: 'Accordion', path: '/ui/accordion', icon: ChevronRight },
+      { name: 'Timeline', description: 'Chronological event list', route: '/ui/timeline' },
+      { name: 'Carousel', description: 'Sliding content carousel', route: '/ui/carousel' },
+      {
+        name: 'Notifications',
+        description: 'Notification feed items',
+        route: '/ui/notifications',
+      },
+      { name: 'Calendar', description: 'Date and event calendar', route: '/calendar' },
     ],
   },
   {
+    id: 'pages',
     title: 'Pages',
+    color: '#6b7280',
     items: [
-      { label: 'Charts', path: '/charts', icon: BarChart2 },
-      { label: 'Tables', path: '/tables', icon: Table2 },
-      { label: 'Calendar', path: '/calendar', icon: Calendar },
-      { label: 'Profile', path: '/profile', icon: User },
-      { label: 'Sign In', path: '/auth/signin', icon: LogIn },
-      { label: 'Sign Up', path: '/auth/signup', icon: UserPlus },
+      { name: 'Charts', description: 'Chart showcase page', route: '/charts' },
+      { name: 'Tables', description: 'Data table showcase page', route: '/tables' },
+      { name: 'Profile', description: 'User profile page', route: '/profile' },
+      { name: 'Sign In', description: 'Authentication login page', route: '/auth/signin' },
+      { name: 'Sign Up', description: 'Registration page', route: '/auth/signup' },
+      { name: '404', description: 'Not found error page', route: '/404' },
     ],
   },
 ];
 
-export function UILibraryPage() {
-  return (
-    <div className="space-y-8">
-      <PageHeader
-        title="UI Library"
-        description="All cosmos_ui components — 32 building blocks"
-        breadcrumb={
-          <PageBreadcrumb items={[{ label: 'Home', href: '/' }, { label: 'UI Library' }]} />
-        }
-      />
+const ALL_FILTER = 'all';
 
-      <div className="space-y-8">
-        {SECTIONS.map((section) => (
-          <div key={section.title}>
-            <h3 className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase dark:text-gray-500">
-              {section.title}
-            </h3>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-              {section.items.map(({ label, path, icon: Icon }) => (
-                <Link
-                  key={path}
-                  to={path}
-                  className="hover:border-brand-300 hover:bg-brand-50 hover:text-brand-600 dark:hover:border-brand-700/50 dark:hover:bg-brand-500/10 dark:hover:text-brand-400 flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-4 text-sm font-medium text-gray-700 transition-all dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
-                >
-                  <Icon className="h-4 w-4 shrink-0" />
-                  {label}
-                </Link>
-              ))}
-            </div>
-          </div>
+// ── Component card ─────────────────────────────────────────────────────────────
+
+const ComponentCard = ({ entry, color }: { entry: ComponentEntry; color: string }) => {
+  return (
+    <Link
+      to={entry.route}
+      className="group flex w-full items-center gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3 text-left transition-all hover:border-gray-300 hover:shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-700"
+    >
+      {/* Color dot */}
+      <span className="mt-0.5 h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: color }} />
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center gap-2">
+          <p className="truncate text-sm font-medium text-gray-800 dark:text-gray-200">
+            {entry.name}
+          </p>
+          {entry.tag && (
+            <span className="shrink-0 rounded bg-gray-100 px-1.5 py-0.5 font-mono text-[9px] text-gray-500 dark:bg-gray-800 dark:text-gray-500">
+              {entry.tag}
+            </span>
+          )}
+        </div>
+        <p className="truncate text-xs text-gray-400 dark:text-gray-500">{entry.description}</p>
+      </div>
+      <ChevronRight className="h-4 w-4 shrink-0 text-gray-300 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-600" />
+    </Link>
+  );
+};
+
+// ── Page ──────────────────────────────────────────────────────────────────────
+
+export function UILibraryPage() {
+  const [search, setSearch] = useState('');
+  const [activeFilter, setActiveFilter] = useState(ALL_FILTER);
+
+  const totalCount = CATEGORIES.reduce((sum, c) => sum + c.items.length, 0);
+
+  // Filter logic: category tab + search query
+  const filtered = useMemo(() => {
+    const q = search.toLowerCase().trim();
+    return CATEGORIES.map((cat) => ({
+      ...cat,
+      items: cat.items.filter(
+        (item) =>
+          (activeFilter === ALL_FILTER || activeFilter === cat.id) &&
+          (!q || item.name.toLowerCase().includes(q) || item.description.toLowerCase().includes(q))
+      ),
+    })).filter((cat) => cat.items.length > 0);
+  }, [search, activeFilter]);
+
+  const filteredCount = filtered.reduce((sum, c) => sum + c.items.length, 0);
+  const hasQuery = search.trim().length > 0 || activeFilter !== ALL_FILTER;
+
+  return (
+    <div className="space-y-5">
+      {/* ── Header ── */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <PageHeader
+          title="UI Library"
+          description={
+            hasQuery
+              ? `${filteredCount} of ${totalCount} components`
+              : `${totalCount} components across ${CATEGORIES.length} categories`
+          }
+          breadcrumb={
+            <PageBreadcrumb items={[{ label: 'Home', href: '/' }, { label: 'UI Library' }]} />
+          }
+        />
+
+        {/* Search */}
+        <div className="relative w-full sm:w-64">
+          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search components…"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="focus:border-brand-500 w-full rounded-xl border border-gray-200 bg-white py-2 pr-8 pl-9 text-sm focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500"
+          />
+          {search && (
+            <button
+              onClick={() => setSearch('')}
+              className="absolute top-1/2 right-2.5 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* ── Category filters ── */}
+      <div className="flex flex-wrap gap-2">
+        <button
+          onClick={() => setActiveFilter(ALL_FILTER)}
+          className={`rounded-xl px-3 py-1.5 text-xs font-medium transition-colors ${
+            activeFilter === ALL_FILTER
+              ? 'bg-brand-500 text-white'
+              : 'border border-gray-200 text-gray-500 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-white/5'
+          }`}
+        >
+          All
+          <span
+            className={`ml-1.5 rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
+              activeFilter === ALL_FILTER
+                ? 'bg-white/20 text-white'
+                : 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
+            }`}
+          >
+            {totalCount}
+          </span>
+        </button>
+
+        {CATEGORIES.map((cat) => (
+          <button
+            key={cat.id}
+            onClick={() => setActiveFilter(activeFilter === cat.id ? ALL_FILTER : cat.id)}
+            className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-medium transition-colors ${
+              activeFilter === cat.id
+                ? 'border-2 text-gray-800 dark:text-gray-200'
+                : 'border border-gray-200 text-gray-500 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-white/5'
+            }`}
+            style={
+              activeFilter === cat.id
+                ? { borderColor: cat.color, backgroundColor: cat.color + '15' }
+                : {}
+            }
+          >
+            <span
+              className="h-2 w-2 shrink-0 rounded-full"
+              style={{ backgroundColor: cat.color }}
+            />
+            {cat.title}
+            <span className="rounded-full bg-gray-100 px-1 text-[10px] font-bold text-gray-500 dark:bg-gray-800 dark:text-gray-400">
+              {cat.items.length}
+            </span>
+          </button>
         ))}
       </div>
+
+      {/* ── No results ── */}
+      {filtered.length === 0 && (
+        <div className="flex flex-col items-center gap-2 py-16 text-center">
+          <Search className="h-8 w-8 text-gray-200 dark:text-gray-700" />
+          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+            No components match &ldquo;{search}&rdquo;
+          </p>
+          <button
+            onClick={() => {
+              setSearch('');
+              setActiveFilter(ALL_FILTER);
+            }}
+            className="text-brand-500 text-xs hover:underline"
+          >
+            Clear filters
+          </button>
+        </div>
+      )}
+
+      {/* ── Component grids ── */}
+      {filtered.map((cat) => (
+        <div key={cat.id}>
+          {/* Section header */}
+          <div className="mb-3 flex items-center gap-2">
+            <span className="h-3 w-3 rounded-full" style={{ backgroundColor: cat.color }} />
+            <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300">{cat.title}</h3>
+            <span className="rounded-full bg-gray-100 px-2 py-0.5 font-mono text-[10px] text-gray-500 dark:bg-gray-800 dark:text-gray-400">
+              {cat.items.length}
+            </span>
+          </div>
+
+          {/* Grid */}
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {cat.items.map((item) => (
+              <ComponentCard key={item.route + item.name} entry={item} color={cat.color} />
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

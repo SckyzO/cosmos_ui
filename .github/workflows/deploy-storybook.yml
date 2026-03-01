@@ -32,12 +32,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: .storybook/package-lock.json
 
       - name: Install Storybook dependencies
         working-directory: .storybook
-        run: npm ci --legacy-peer-deps || npm install --legacy-peer-deps
+        run: npm install --legacy-peer-deps
 
       - name: Build Storybook static site
         working-directory: .storybook

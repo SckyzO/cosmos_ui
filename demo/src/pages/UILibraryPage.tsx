@@ -24,6 +24,10 @@ import {
   PanelRight,
   CreditCard,
   Image,
+  Table2,
+  Calendar,
+  LogIn,
+  UserPlus,
 } from 'lucide-react';
 import { PageHeader, PageBreadcrumb } from '../components/ui-showcase';
 
@@ -93,6 +97,17 @@ const SECTIONS = [
       { label: 'List', path: '/ui/list', icon: List },
       { label: 'Timeline', path: '/ui/timeline', icon: Clock },
       { label: 'Accordion', path: '/ui/accordion', icon: ChevronRight },
+    ],
+  },
+  {
+    title: 'Pages',
+    items: [
+      { label: 'Charts', path: '/charts', icon: BarChart2 },
+      { label: 'Tables', path: '/tables', icon: Table2 },
+      { label: 'Calendar', path: '/calendar', icon: Calendar },
+      { label: 'Profile', path: '/profile', icon: User },
+      { label: 'Sign In', path: '/auth/signin', icon: LogIn },
+      { label: 'Sign Up', path: '/auth/signup', icon: UserPlus },
     ],
   },
 ];

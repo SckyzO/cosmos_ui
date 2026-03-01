@@ -209,8 +209,8 @@ export const CosmosSidebar = ({
       {showBoot && <BootOverlay onClose={() => setShowBoot(false)} />}
 
       <aside
-        className={`cosmos-sidebar group flex h-screen flex-col border-r border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950 ${
-          collapsed ? 'w-[70px]' : 'w-[260px]'
+        className={`cosmos-sidebar cosmos-scrollbar group dark:bg-gray-dark flex h-screen shrink-0 flex-col overflow-hidden border-r border-gray-200 bg-white px-5 transition-[width] duration-300 ease-linear dark:border-gray-800 ${
+          collapsed ? 'w-[90px] hover:w-[290px]' : 'w-[290px]'
         }`}
       >
         {/* Logo */}
@@ -235,7 +235,7 @@ export const CosmosSidebar = ({
         </div>
 
         {/* Navigation */}
-        <nav className="cosmos-scrollbar flex-1 overflow-y-auto px-3 py-4">
+        <nav className="flex-1 overflow-y-auto py-4">
           {navSections.map((section) => (
             <div key={section.id}>
               <SectionLabel label={section.label} collapsed={collapsed} />

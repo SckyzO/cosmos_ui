@@ -1,5 +1,16 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { LayoutDashboard, Palette, Settings, Square } from 'lucide-react';
+import {
+  LayoutDashboard,
+  Palette,
+  Settings,
+  Square,
+  Table2,
+  Calendar,
+  User,
+  LogIn,
+  UserPlus,
+  BarChart2,
+} from 'lucide-react';
 import { CosmosLayout } from '@cosmos/components/layout/CosmosLayout';
 import { useTheme, ACCENTS, LIGHT_THEMES, DARK_THEMES } from '@cosmos/contexts/ThemeContext';
 import type { NavSection } from '@cosmos/components/layout/CosmosSidebar';
@@ -8,6 +19,16 @@ import '@cosmos-styles/app.css';
 // ── Settings page ─────────────────────────────────────────────────────────────
 
 import { SettingsPage } from './pages/SettingsPage';
+
+// ── Demo pages ────────────────────────────────────────────────────────────────
+
+import { ChartsPage } from './pages/ChartsPage';
+import { TablesPage } from './pages/TablesPage';
+import { CalendarPage } from './pages/CalendarPage';
+import { ProfilePage } from './pages/ProfilePage';
+import { SignInPage } from './pages/SignInPage';
+import { SignUpPage } from './pages/SignUpPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 
 // ── UI Library pages ──────────────────────────────────────────────────────────
 
@@ -55,6 +76,24 @@ const NAV: NavSection[] = [
       { to: '/', icon: LayoutDashboard, label: 'Dashboard', end: true },
       { to: '/theme', icon: Palette, label: 'Theme & Colors' },
       { to: '/ui', icon: Square, label: 'UI Library' },
+    ],
+  },
+  {
+    id: 'pages',
+    label: 'Pages',
+    items: [
+      { to: '/charts', icon: BarChart2, label: 'Charts' },
+      { to: '/tables', icon: Table2, label: 'Tables' },
+      { to: '/calendar', icon: Calendar, label: 'Calendar' },
+      { to: '/profile', icon: User, label: 'Profile' },
+    ],
+  },
+  {
+    id: 'auth',
+    label: 'Authentication',
+    items: [
+      { to: '/auth/signin', icon: LogIn, label: 'Sign In' },
+      { to: '/auth/signup', icon: UserPlus, label: 'Sign Up' },
     ],
   },
   {
@@ -273,6 +312,12 @@ export default function App() {
           <Route path="theme" element={<ThemePage />} />
           <Route path="settings" element={<SettingsPage />} />
 
+          {/* Demo pages */}
+          <Route path="charts" element={<ChartsPage />} />
+          <Route path="tables" element={<TablesPage />} />
+          <Route path="calendar" element={<CalendarPage />} />
+          <Route path="profile" element={<ProfilePage />} />
+
           {/* UI Library hub */}
           <Route path="ui" element={<UILibraryPage />} />
 
@@ -310,6 +355,13 @@ export default function App() {
           <Route path="ui/toast" element={<ToastPage />} />
           <Route path="ui/tooltips" element={<TooltipsPage />} />
         </Route>
+
+        {/* Auth pages — full-page layout, outside the main layout */}
+        <Route path="auth/signin" element={<SignInPage />} />
+        <Route path="auth/signup" element={<SignUpPage />} />
+
+        {/* 404 catch-all */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

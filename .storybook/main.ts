@@ -9,11 +9,11 @@ import type { StorybookConfig } from '@storybook/react-vite';
  */
 const config: StorybookConfig = {
   stories: [
-    // Stories co-located with cosmos components
+    // Paths are relative to this config directory (.storybook/).
+    // '../src/cosmos/**/*' → /app/src/cosmos/**/* (component stories, volume-mounted)
+    // './stories/**/*'     → /app/.storybook/stories/**/* (standalone stories, volume-mounted)
     '../src/cosmos/**/*.stories.@(ts|tsx)',
-    // Stories in the .storybook/stories/ directory
     './stories/**/*.stories.@(ts|tsx)',
-    // MDX documentation
     '../src/cosmos/**/*.mdx',
     './stories/**/*.mdx',
   ],

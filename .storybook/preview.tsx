@@ -4,19 +4,11 @@ import './global.css';
 import { ThemeProvider, useTheme } from '@cosmos/contexts/ThemeContext';
 
 /**
- * Storybook preview configuration for cosmos_ui.
- *
- * Features:
- * - ThemeProvider wraps every story (access to useTheme hook)
- * - Dark/Light toggle in the toolbar (cosmos-theme global)
- * - Accent color selector in the toolbar
- * - Automatic .dark class applied to the story container
- * - Background synced with the current theme palette
+ * Storybook 10 preview for cosmos_ui.
+ * - ThemeProvider wraps every story
+ * - cosmosTheme global toggles dark/light in the toolbar
+ * - .dark class applied to the story wrapper
  */
-
-// ── DarkModeSync ──────────────────────────────────────────────────────────────
-// Reads the Storybook 'cosmosTheme' global and applies the .dark class +
-// dispatches the cosmos-theme-mode event so ThemeContext stays in sync.
 
 const DarkModeSync = ({
   children,
@@ -45,10 +37,8 @@ const DarkModeSync = ({
   );
 };
 
-// ── Decorator ─────────────────────────────────────────────────────────────────
-
 const withCosmosTheme: Decorator = (Story, context) => {
-  const isDark = context.globals.cosmosTheme !== 'light';
+  const isDark = context.globals['cosmosTheme'] !== 'light';
 
   return (
     <ThemeProvider>
@@ -58,8 +48,6 @@ const withCosmosTheme: Decorator = (Story, context) => {
     </ThemeProvider>
   );
 };
-
-// ── Preview config ────────────────────────────────────────────────────────────
 
 const preview: Preview = {
   globalTypes: {
@@ -78,29 +66,19 @@ const preview: Preview = {
   },
 
   initialGlobals: {
-    // Dark mode first — NOC / developer default
     cosmosTheme: 'dark',
   },
 
   decorators: [withCosmosTheme],
 
   parameters: {
-    // Disable the default background switcher (we manage it via ThemeContext)
     backgrounds: { disable: true },
-
-    // Docs: dark theme for the Storybook UI
-    docs: {
-      theme: undefined, // set in cosmos-theme.ts
-    },
-
     controls: {
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/i,
       },
     },
-
-    // Layout default: centered for most components
     layout: 'padded',
   },
 };

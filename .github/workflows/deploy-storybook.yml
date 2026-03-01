@@ -38,10 +38,11 @@ jobs:
         run: npm install --legacy-peer-deps
 
       - name: Build Storybook static site
-        working-directory: .storybook
+        # Run from repo root so Storybook finds config in .storybook/ by default.
+        # Use the binary installed in .storybook/node_modules.
         env:
           NODE_OPTIONS: --max-old-space-size=4096
-        run: npm run build-storybook -- --output-dir ../storybook-static
+        run: .storybook/node_modules/.bin/storybook build --output-dir storybook-static
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

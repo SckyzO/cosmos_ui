@@ -1,88 +1,444 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>
-      eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template
-    </title>
+    <title>cosmos_ui — Design System</title>
+    <link rel="icon" type="image/x-icon" href="./images/favicon.ico" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./css/cosmos-tokens.css" />
+    <style>
+      /* cosmos_ui landing page styles */
+      * { box-sizing: border-box; }
+
+      body {
+        font-family: Outfit, system-ui, sans-serif;
+        background: var(--color-gray-dark, #111827);
+        color: #e4e7ec;
+        margin: 0;
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .hero {
+        text-align: center;
+        padding: 80px 24px 60px;
+        background: linear-gradient(135deg, #0f1117 0%, #1a1d27 50%, #0f1117 100%);
+        border-bottom: 1px solid #1f2937;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin: 0 0 16px;
+        background: linear-gradient(135deg, #fff 0%, #6a7aff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -1px;
+      }
+
+      .hero p {
+        font-size: 1.125rem;
+        color: #9ca3af;
+        max-width: 600px;
+        margin: 0 auto 36px;
+        line-height: 1.7;
+      }
+
+      .badges {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 12px;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        border: 1px solid;
+      }
+      .badge-blue  { background: rgb(70 95 255 / 0.1);  border-color: rgb(70 95 255 / 0.3);  color: #8a96ff; }
+      .badge-cyan  { background: rgb(6 182 212 / 0.1);  border-color: rgb(6 182 212 / 0.3);  color: #67e8f9; }
+      .badge-pink  { background: rgb(236 72 153 / 0.1); border-color: rgb(236 72 153 / 0.3); color: #f9a8d4; }
+      .badge-green { background: rgb(16 185 129 / 0.1); border-color: rgb(16 185 129 / 0.3); color: #6ee7b7; }
+      .badge-gray  { background: rgb(107 114 128 / 0.1); border-color: rgb(107 114 128 / 0.3); color: #9ca3af; }
+
+      .stats {
+        display: flex;
+        justify-content: center;
+        gap: 48px;
+        flex-wrap: wrap;
+        padding: 20px 24px;
+        background: #0f1117;
+        border-bottom: 1px solid #1f2937;
+      }
+
+      .stat { text-align: center; }
+      .stat-value { font-size: 1.5rem; font-weight: 700; color: #6a7aff; }
+      .stat-label { font-size: 0.75rem; color: #6b7280; margin-top: 2px; }
+
+      .content { max-width: 1200px; margin: 0 auto; padding: 48px 24px; }
+
+      .section-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #fff;
+        margin: 0 0 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .section-title::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: #1f2937;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 12px;
+        margin-bottom: 40px;
+      }
+
+      .card {
+        display: block;
+        padding: 16px;
+        background: #1a1d27;
+        border: 1px solid #1f2937;
+        border-radius: 12px;
+        text-decoration: none;
+        color: #d1d5db;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 0.15s ease;
+        cursor: pointer;
+      }
+
+      .card:hover {
+        border-color: #465fff;
+        background: rgb(70 95 255 / 0.08);
+        color: #8a96ff;
+        transform: translateY(-1px);
+      }
+
+      .card-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: rgb(70 95 255 / 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+        font-size: 1rem;
+      }
+
+      .card-name { font-weight: 600; color: #e5e7eb; margin-bottom: 3px; }
+      .card-desc { font-size: 0.75rem; color: #6b7280; }
+
+      .theme-section {
+        background: #1a1d27;
+        border: 1px solid #1f2937;
+        border-radius: 16px;
+        padding: 28px;
+        margin-bottom: 40px;
+      }
+
+      .palette-row { display: flex; gap: 4px; margin-bottom: 12px; }
+      .swatch { flex: 1; height: 32px; border-radius: 6px; }
+
+      .accent-row { display: flex; gap: 8px; margin-top: 16px; }
+      .accent-dot { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; transition: transform 0.1s; }
+      .accent-dot:hover { transform: scale(1.15); }
+
+      .footer {
+        text-align: center;
+        padding: 32px 24px;
+        border-top: 1px solid #1f2937;
+        color: #4b5563;
+        font-size: 0.875rem;
+      }
+
+      .footer a { color: #6a7aff; text-decoration: none; }
+      .footer a:hover { text-decoration: underline; }
+
+      @media (max-width: 640px) {
+        .hero h1 { font-size: 2rem; }
+        .stats { gap: 24px; }
+      }
+    </style>
   </head>
-  <body
-    x-data="{ page: 'ecommerce', 'loaded': true, 'darkMode': false, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
-    x-init="
-         darkMode = JSON.parse(localStorage.getItem('darkMode'));
-         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
-    :class="{'dark bg-gray-900': darkMode === true}"
-  >
-    <!-- ===== Preloader Start ===== -->
-    <include src="./partials/preloader.html"></include>
-    <!-- ===== Preloader End ===== -->
+  <body>
 
-    <!-- ===== Page Wrapper Start ===== -->
-    <div class="flex h-screen overflow-hidden">
-      <!-- ===== Sidebar Start ===== -->
-      <include src="./partials/sidebar.html"></include>
-      <!-- ===== Sidebar End ===== -->
+    <!-- ── Hero ──────────────────────────────────────────────────────── -->
+    <div class="hero">
+      <h1>cosmos_ui</h1>
+      <p>
+        A complete design system &amp; UI kit built on TailAdmin + Tailwind CSS v4.
+        Dark mode first, 5 accent colors, 8 palettes, 48+ components.
+      </p>
 
-      <!-- ===== Content Area Start ===== -->
-      <div
-        class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto"
-      >
-        <!-- Small Device Overlay Start -->
-        <include src="./partials/overlay.html" />
-        <!-- Small Device Overlay End -->
-
-        <!-- ===== Header Start ===== -->
-        <include src="./partials/header.html" />
-        <!-- ===== Header End ===== -->
-
-        <!-- ===== Main Content Start ===== -->
-        <main>
-          <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
-            <div class="grid grid-cols-12 gap-4 md:gap-6">
-              <div class="col-span-12 space-y-6 xl:col-span-7">
-                <!-- Metric Group One -->
-                <include src="./partials/metric-group/metric-group-01.html" />
-                <!-- Metric Group One -->
-
-                <!-- ====== Chart One Start -->
-                <include src="./partials/chart/chart-01.html" />
-                <!-- ====== Chart One End -->
-              </div>
-              <div class="col-span-12 xl:col-span-5">
-                <!-- ====== Chart Two Start -->
-                <include src="./partials/chart/chart-02.html" />
-                <!-- ====== Chart Two End -->
-              </div>
-
-              <div class="col-span-12">
-                <!-- ====== Chart Three Start -->
-                <include src="./partials/chart/chart-03.html" />
-                <!-- ====== Chart Three End -->
-              </div>
-
-              <div class="col-span-12 xl:col-span-5">
-                <!-- ====== Map One Start -->
-                <include src="./partials/map-01.html" />
-                <!-- ====== Map One End -->
-              </div>
-
-              <div class="col-span-12 xl:col-span-7">
-                <!-- ====== Table One Start -->
-                <include src="./partials/table/table-01.html" />
-                <!-- ====== Table One End -->
-              </div>
-            </div>
-          </div>
-        </main>
-        <!-- ===== Main Content End ===== -->
+      <div class="badges">
+        <span class="badge badge-blue">Tailwind CSS v4</span>
+        <span class="badge badge-cyan">React 19</span>
+        <span class="badge badge-pink">TypeScript</span>
+        <span class="badge badge-green">HTML Templates</span>
+        <span class="badge badge-gray">MIT License</span>
       </div>
-      <!-- ===== Content Area End ===== -->
+
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a href="https://github.com/SckyzO/cosmos_ui"
+           style="display:inline-flex;align-items:center;gap:8px;padding:10px 24px;background:#465fff;color:#fff;border-radius:8px;font-weight:600;font-size:0.875rem;text-decoration:none;transition:background 0.15s;"
+           onmouseover="this.style.background='#3641f5'"
+           onmouseout="this.style.background='#465fff'">
+          GitHub →
+        </a>
+        <a href="./dashboard.html"
+           style="display:inline-flex;align-items:center;gap:8px;padding:10px 24px;border:1px solid #374151;color:#d1d5db;border-radius:8px;font-weight:600;font-size:0.875rem;text-decoration:none;transition:all 0.15s;"
+           onmouseover="this.style.borderColor='#465fff';this.style.color='#8a96ff'"
+           onmouseout="this.style.borderColor='#374151';this.style.color='#d1d5db'">
+          View Dashboard
+        </a>
+      </div>
     </div>
-    <!-- ===== Page Wrapper End ===== -->
+
+    <!-- ── Stats ─────────────────────────────────────────────────────── -->
+    <div class="stats">
+      <div class="stat"><div class="stat-value">48+</div><div class="stat-label">Components</div></div>
+      <div class="stat"><div class="stat-value">15</div><div class="stat-label">Chart types</div></div>
+      <div class="stat"><div class="stat-value">8</div><div class="stat-label">Color palettes</div></div>
+      <div class="stat"><div class="stat-value">5</div><div class="stat-label">Accent colors</div></div>
+      <div class="stat"><div class="stat-value">2</div><div class="stat-label">Packages (React + HTML)</div></div>
+    </div>
+
+    <!-- ── Content ───────────────────────────────────────────────────── -->
+    <div class="content">
+
+      <!-- Theme showcase -->
+      <div class="section-title">🎨 Theme System</div>
+      <div class="theme-section">
+        <div style="color:#9ca3af;font-size:0.875rem;margin-bottom:16px;">
+          5 accent colors × 4 dark palettes × 4 light palettes = 80 theme combinations
+        </div>
+
+        <!-- Brand palette (indigo default) -->
+        <div style="font-size:0.75rem;color:#6b7280;margin-bottom:8px;">Brand palette (indigo)</div>
+        <div class="palette-row">
+          <div class="swatch" style="background:#f2f7ff;" title="brand-25"></div>
+          <div class="swatch" style="background:#ecf3ff;" title="brand-50"></div>
+          <div class="swatch" style="background:#dde9ff;" title="brand-100"></div>
+          <div class="swatch" style="background:#c2d6ff;" title="brand-200"></div>
+          <div class="swatch" style="background:#9cb9ff;" title="brand-300"></div>
+          <div class="swatch" style="background:#7592ff;" title="brand-400"></div>
+          <div class="swatch" style="background:#465fff;" title="brand-500"></div>
+          <div class="swatch" style="background:#3641f5;" title="brand-600"></div>
+          <div class="swatch" style="background:#2a31d8;" title="brand-700"></div>
+          <div class="swatch" style="background:#252dae;" title="brand-800"></div>
+          <div class="swatch" style="background:#262e89;" title="brand-900"></div>
+          <div class="swatch" style="background:#161950;" title="brand-950"></div>
+        </div>
+
+        <!-- Accent colors -->
+        <div style="font-size:0.75rem;color:#6b7280;margin:16px 0 8px;">Accent colors</div>
+        <div class="accent-row">
+          <div class="accent-dot" style="background:#465fff;" title="Indigo"></div>
+          <div class="accent-dot" style="background:#7c3aed;" title="Violet"></div>
+          <div class="accent-dot" style="background:#059669;" title="Emerald"></div>
+          <div class="accent-dot" style="background:#e11d48;" title="Rose"></div>
+          <div class="accent-dot" style="background:#d97706;" title="Amber"></div>
+          <span style="color:#4b5563;font-size:0.75rem;margin-left:8px;align-self:center;">
+            indigo · violet · emerald · rose · amber
+          </span>
+        </div>
+
+        <!-- Dark palettes -->
+        <div style="font-size:0.75rem;color:#6b7280;margin:16px 0 8px;">Dark palettes</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 10px;background:#030712;border-radius:6px;border:1px solid #111827;font-size:0.75rem;color:#9ca3af;">
+            <span style="width:10px;height:10px;border-radius:50%;background:#030712;border:1px solid #374151;"></span> Void
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 10px;background:#020617;border-radius:6px;border:1px solid #0f172a;font-size:0.75rem;color:#9ca3af;">
+            <span style="width:10px;height:10px;border-radius:50%;background:#020617;border:1px solid #334155;"></span> Navy
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 10px;background:#09090b;border-radius:6px;border:1px solid #18181b;font-size:0.75rem;color:#9ca3af;">
+            <span style="width:10px;height:10px;border-radius:50%;background:#09090b;border:1px solid #27272a;"></span> Forest
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;padding:6px 10px;background:#000800;border-radius:6px;border:1px solid #003000;font-size:0.75rem;color:#00ff41;">
+            <span style="width:10px;height:10px;border-radius:50%;background:#00cc34;"></span> Matrix 🟩
+          </div>
+        </div>
+      </div>
+
+      <!-- Pages -->
+      <div class="section-title">📄 Pages</div>
+      <div class="grid">
+        <a href="./dashboard.html" class="card">
+          <div class="card-icon">📊</div>
+          <div class="card-name">Dashboard</div>
+          <div class="card-desc">eCommerce analytics</div>
+        </a>
+        <a href="./profile.html" class="card">
+          <div class="card-icon">👤</div>
+          <div class="card-name">Profile</div>
+          <div class="card-desc">User profile page</div>
+        </a>
+        <a href="./signin.html" class="card">
+          <div class="card-icon">🔑</div>
+          <div class="card-name">Sign In</div>
+          <div class="card-desc">Authentication form</div>
+        </a>
+        <a href="./signup.html" class="card">
+          <div class="card-icon">📝</div>
+          <div class="card-name">Sign Up</div>
+          <div class="card-desc">Registration form</div>
+        </a>
+        <a href="./404.html" class="card">
+          <div class="card-icon">🚫</div>
+          <div class="card-name">404</div>
+          <div class="card-desc">Not found page</div>
+        </a>
+        <a href="./sidebar.html" class="card">
+          <div class="card-icon">📌</div>
+          <div class="card-name">Sidebar</div>
+          <div class="card-desc">Navigation sidebar</div>
+        </a>
+      </div>
+
+      <!-- UI Components -->
+      <div class="section-title">🧩 UI Components</div>
+      <div class="grid">
+        <a href="./buttons.html" class="card">
+          <div class="card-icon">🔘</div>
+          <div class="card-name">Buttons</div>
+          <div class="card-desc">All button variants</div>
+        </a>
+        <a href="./alerts.html" class="card">
+          <div class="card-icon">⚠️</div>
+          <div class="card-name">Alerts</div>
+          <div class="card-desc">Feedback messages</div>
+        </a>
+        <a href="./badge.html" class="card">
+          <div class="card-icon">🏷️</div>
+          <div class="card-name">Badges</div>
+          <div class="card-desc">Status labels</div>
+        </a>
+        <a href="./avatars.html" class="card">
+          <div class="card-icon">👥</div>
+          <div class="card-name">Avatars</div>
+          <div class="card-desc">User avatars</div>
+        </a>
+        <a href="./form-elements.html" class="card">
+          <div class="card-icon">📋</div>
+          <div class="card-name">Forms</div>
+          <div class="card-desc">Input elements</div>
+        </a>
+        <a href="./basic-tables.html" class="card">
+          <div class="card-icon">📊</div>
+          <div class="card-name">Tables</div>
+          <div class="card-desc">Data tables</div>
+        </a>
+        <a href="./calendar.html" class="card">
+          <div class="card-icon">📅</div>
+          <div class="card-name">Calendar</div>
+          <div class="card-desc">Date picker</div>
+        </a>
+        <a href="./images.html" class="card">
+          <div class="card-icon">🖼️</div>
+          <div class="card-name">Images</div>
+          <div class="card-desc">Image components</div>
+        </a>
+      </div>
+
+      <!-- Charts -->
+      <div class="section-title">📈 Charts</div>
+      <div class="grid">
+        <a href="./bar-chart.html" class="card">
+          <div class="card-icon">📊</div>
+          <div class="card-name">Bar Chart</div>
+          <div class="card-desc">Column charts</div>
+        </a>
+        <a href="./line-chart.html" class="card">
+          <div class="card-icon">📈</div>
+          <div class="card-name">Line Chart</div>
+          <div class="card-desc">Trend lines</div>
+        </a>
+      </div>
+
+      <!-- CSS Tokens -->
+      <div class="section-title">🎨 CSS Design Tokens</div>
+      <div class="theme-section" style="font-family:monospace;font-size:0.8125rem;line-height:1.8;color:#9ca3af;">
+        <div style="color:#6b7280;margin-bottom:12px;font-family:Outfit,sans-serif;font-size:0.875rem;">
+          Include in any HTML project — zero framework dependency:
+        </div>
+        <div style="background:#0f1117;padding:16px;border-radius:8px;overflow-x:auto;">
+          <span style="color:#374151;">&lt;</span><span style="color:#6a7aff;">link</span>
+          <span style="color:#9ca3af;"> rel</span><span style="color:#374151;">=</span><span style="color:#6ee7b7;">"stylesheet"</span>
+          <span style="color:#9ca3af;"> href</span><span style="color:#374151;">=</span><span style="color:#6ee7b7;">"cosmos-tokens.css"</span>
+          <span style="color:#374151;">&gt;</span>
+          <br><br>
+          <span style="color:#374151;">&lt;</span><span style="color:#6a7aff;">div</span>
+          <span style="color:#9ca3af;"> class</span><span style="color:#374151;">=</span><span style="color:#6ee7b7;">"cosmos-root dark"</span>
+          <span style="color:#374151;">&gt;</span><br>
+          &nbsp;&nbsp;<span style="color:#4b5563;">/* Uses --color-brand-500, --color-bg-base, etc. */</span><br>
+          <span style="color:#374151;">&lt;/</span><span style="color:#6a7aff;">div</span><span style="color:#374151;">&gt;</span>
+        </div>
+        <br>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-top:8px;">
+          <div>
+            <span style="color:#6b7280;">--color-brand-500</span><br>
+            <span style="color:#6a7aff;">→ #465fff (indigo default)</span>
+          </div>
+          <div>
+            <span style="color:#6b7280;">--color-bg-base</span><br>
+            <span style="color:#6a7aff;">→ #0a0a0a (dark bg)</span>
+          </div>
+          <div>
+            <span style="color:#6b7280;">--color-accent</span><br>
+            <span style="color:#6a7aff;">→ current accent color</span>
+          </div>
+          <div>
+            <span style="color:#6b7280;">.cosmos-root</span><br>
+            <span style="color:#6a7aff;">→ app shell class</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Getting started -->
+      <div class="section-title">🚀 Quick Start</div>
+      <div class="theme-section" style="font-family:monospace;font-size:0.8125rem;line-height:2;color:#9ca3af;">
+        <div style="background:#0f1117;padding:16px;border-radius:8px;overflow-x:auto;">
+          <span style="color:#6b7280;"># Clone &amp; start</span><br>
+          <span style="color:#6a7aff;">git clone</span> https://github.com/SckyzO/cosmos_ui.git<br>
+          <span style="color:#6a7aff;">cd</span> cosmos_ui<br>
+          <span style="color:#6a7aff;">make up</span><br>
+          <br>
+          <span style="color:#6b7280;"># Demo app (React)</span><br>
+          <span style="color:#6a7aff;">open</span> http://localhost:5174
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── Footer ─────────────────────────────────────────────────────── -->
+    <div class="footer">
+      <p>
+        cosmos_ui — Built on
+        <a href="https://tailadmin.com" target="_blank">TailAdmin</a> +
+        <a href="https://tailwindcss.com" target="_blank">Tailwind CSS v4</a> ·
+        <a href="https://github.com/SckyzO/cosmos_ui" target="_blank">GitHub</a> ·
+        MIT License
+      </p>
+    </div>
+
   </body>
 </html>

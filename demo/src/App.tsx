@@ -5,6 +5,10 @@ import { useTheme, ACCENTS, LIGHT_THEMES, DARK_THEMES } from '@cosmos/contexts/T
 import type { NavSection } from '@cosmos/components/layout/CosmosSidebar';
 import '@cosmos-styles/app.css';
 
+// ── Settings page ─────────────────────────────────────────────────────────────
+
+import { SettingsPage } from './pages/SettingsPage';
+
 // ── UI Library pages ──────────────────────────────────────────────────────────
 
 import { UILibraryPage } from './pages/UILibraryPage';
@@ -258,18 +262,6 @@ function ThemePage() {
   );
 }
 
-function PlaceholderPage({ title }: { title: string }) {
-  return (
-    <div className="flex flex-col items-center justify-center py-24 text-center">
-      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-100 dark:bg-gray-800">
-        <Square className="h-8 w-8 text-gray-400" />
-      </div>
-      <h2 className="text-xl font-bold text-gray-900 dark:text-white">{title}</h2>
-      <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">Coming soon</p>
-    </div>
-  );
-}
-
 // ── App ───────────────────────────────────────────────────────────────────────
 
 export default function App() {
@@ -279,7 +271,7 @@ export default function App() {
         <Route element={<CosmosLayout navSections={NAV} appName="cosmos_ui" />}>
           <Route index element={<DashboardPage />} />
           <Route path="theme" element={<ThemePage />} />
-          <Route path="settings" element={<PlaceholderPage title="Settings" />} />
+          <Route path="settings" element={<SettingsPage />} />
 
           {/* UI Library hub */}
           <Route path="ui" element={<UILibraryPage />} />

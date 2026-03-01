@@ -9,6 +9,9 @@ export type {
 } from './contexts/ThemeContext';
 export { ACCENTS, LIGHT_THEMES, DARK_THEMES } from './contexts/ThemeContext';
 
+// UI Components
+export * from './components/ui/index';
+
 // Layout components
 export { CosmosLayout } from './components/layout/CosmosLayout';
 export { CosmosSidebar } from './components/layout/CosmosSidebar';

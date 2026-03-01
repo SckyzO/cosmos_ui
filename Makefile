@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 COMPOSE := docker compose -f docker-compose.dev.yml
 
-.PHONY: up down logs build lint storybook demo shell-demo shell-storybook clean
+.PHONY: up down logs build lint storybook-build shell-demo shell-storybook clean
 
 # ── Stack ──────────────────────────────────────────────────────────────────────
 up:
@@ -15,6 +15,12 @@ down:
 logs:
 	$(COMPOSE) logs -f
 
+logs-demo:
+	$(COMPOSE) logs -f demo
+
+logs-storybook:
+	$(COMPOSE) logs -f storybook
+
 restart:
 	$(COMPOSE) restart
 
@@ -26,6 +32,7 @@ lint:
 	$(COMPOSE) exec demo npm run lint
 	$(COMPOSE) exec demo npm run lint:css
 	$(COMPOSE) exec demo npm run lint:format
+	@echo "✅ All linters passed"
 
 storybook-build:
 	$(COMPOSE) run --rm storybook npm run build-storybook

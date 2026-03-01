@@ -1,0 +1,221 @@
+/* =============================================================================
+   cosmos-dark.css
+   Dark mode toggle stylesheet for the cosmos UI HTML package.
+
+   Include after cosmos-tokens.css. No Tailwind dependency.
+
+   Mechanism:
+     - Default: light mode styles (slate light theme defaults)
+     - `.dark` class on <html> or <body>: dark mode styles (void dark theme defaults)
+
+   To toggle dark mode at runtime:
+     document.documentElement.classList.toggle('dark');
+
+   To persist preference:
+     localStorage.setItem('cosmos.theme.mode', 'dark');
+     if (localStorage.getItem('cosmos.theme.mode') === 'dark') {
+       document.documentElement.classList.add('dark');
+     }
+   ========================================================================== */
+
+
+/* =============================================================================
+   LIGHT MODE  —  Default state
+   Based on the "slate" light theme palette from ThemeContext.
+   ============================================================================= */
+
+:root {
+  color-scheme: light;
+
+  /* Page & surface backgrounds */
+  --color-bg-base:         #f9fafb;
+  --color-bg-panel:        #ffffff;
+  --color-bg-elevated:     #ffffff;
+
+  /* Borders */
+  --color-border:          #d0d5dd;
+
+  /* Text hierarchy */
+  --color-text-base:       #101828;
+  --color-text-primary:    #101828;
+  --color-text-secondary:  #667085;
+  --color-text-muted:      #98a2b3;
+  --color-text-inverse:    #ffffff;
+
+  /* Accent (default: indigo) */
+  --color-accent:          #465fff;
+  --color-accent-primary:  #465fff;
+
+  /* Gray scale (slate light) */
+  --color-white:           #ffffff;
+  --color-gray-50:         #f9fafb;
+  --color-gray-100:        #f3f4f6;
+  --color-gray-200:        #e5e7eb;
+
+  /* Body */
+  background-color: var(--color-bg-base);
+  color: var(--color-text-base);
+}
+
+body {
+  background-color: var(--color-bg-base);
+  color: var(--color-text-base);
+  font-family: var(--font-sans, 'Outfit', system-ui, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+
+/* =============================================================================
+   DARK MODE  —  `.dark` class on <html> or <body>
+   Based on the "void" dark theme palette (deep pure black) from ThemeContext.
+   ============================================================================= */
+
+.dark {
+  color-scheme: dark;
+
+  /* Page & surface backgrounds */
+  --color-bg-base:         #0a0a0a;
+  --color-bg-panel:        #121212;
+  --color-bg-elevated:     #1a1a1a;
+
+  /* Borders */
+  --color-border:          #333333;
+
+  /* Text hierarchy */
+  --color-text-base:       #e5e5e5;
+  --color-text-primary:    #ffffff;
+  --color-text-secondary:  #a3a3a3;
+  --color-text-muted:      #737373;
+  --color-text-inverse:    #0a0a0a;
+
+  /* Accent remains the same; override per-project if needed */
+  --color-accent:          #465fff;
+  --color-accent-primary:  #465fff;
+
+  /* Gray scale overrides (void dark palette) */
+  --color-gray-dark: #111827;
+  --color-gray-700:  #374151;
+  --color-gray-800:  #1f2937;
+  --color-gray-900:  #111827;
+  --color-gray-950:  #030712;
+}
+
+.dark body,
+body.dark {
+  background-color: var(--color-bg-base);
+  color: var(--color-text-base);
+}
+
+
+/* =============================================================================
+   SURFACE HELPERS
+   Utility classes that use the semantic tokens for consistent surface styling.
+   ============================================================================= */
+
+/* Page-level background */
+.bg-base {
+  background-color: var(--color-bg-base);
+}
+
+/* Card / panel background */
+.bg-panel {
+  background-color: var(--color-bg-panel);
+}
+
+/* Elevated surface (modals, dropdowns) */
+.bg-elevated {
+  background-color: var(--color-bg-elevated);
+}
+
+/* Default border */
+.border-base {
+  border-color: var(--color-border);
+}
+
+
+/* =============================================================================
+   TEXT HELPERS
+   ============================================================================= */
+
+.text-base-color {
+  color: var(--color-text-base);
+}
+
+.text-primary-color {
+  color: var(--color-text-primary);
+}
+
+.text-secondary-color {
+  color: var(--color-text-secondary);
+}
+
+.text-muted-color {
+  color: var(--color-text-muted);
+}
+
+.text-inverse-color {
+  color: var(--color-text-inverse);
+}
+
+.text-accent-color {
+  color: var(--color-accent);
+}
+
+
+/* =============================================================================
+   CARD COMPONENT
+   A simple card that respects the active surface token.
+   ============================================================================= */
+
+.cosmos-card {
+  background-color: var(--color-bg-panel);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow-theme-sm, 0px 1px 3px 0px rgb(16 24 40 / 10%));
+  color: var(--color-text-base);
+  transition: background-color 300ms ease, border-color 300ms ease;
+}
+
+.cosmos-card:hover {
+  box-shadow: var(--shadow-theme-md, 0px 4px 8px -2px rgb(16 24 40 / 10%));
+}
+
+
+/* =============================================================================
+   FOCUS RING
+   Consistent keyboard focus indicator using the accent focus ring token.
+   ============================================================================= */
+
+.cosmos-focus-ring:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus-ring, 0px 0px 0px 4px rgb(70 95 255 / 12%));
+}
+
+
+/* =============================================================================
+   PREFERS-COLOR-SCHEME MEDIA QUERY FALLBACK
+   When no `.dark` class is set by JavaScript, respect the OS preference.
+   Comment this block out if you manage mode exclusively via the `.dark` class.
+   ============================================================================= */
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    color-scheme: dark;
+
+    --color-bg-base:         #0a0a0a;
+    --color-bg-panel:        #121212;
+    --color-bg-elevated:     #1a1a1a;
+    --color-border:          #333333;
+    --color-text-base:       #e5e5e5;
+    --color-text-primary:    #ffffff;
+    --color-text-secondary:  #a3a3a3;
+    --color-text-muted:      #737373;
+    --color-text-inverse:    #0a0a0a;
+    --color-gray-dark: #111827;
+    --color-gray-700:  #374151;
+    --color-gray-800:  #1f2937;
+    --color-gray-900:  #111827;
+    --color-gray-950:  #030712;
+  }
+}

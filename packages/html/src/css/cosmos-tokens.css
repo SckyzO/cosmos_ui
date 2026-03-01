@@ -1,0 +1,441 @@
+/* =============================================================================
+   cosmos-tokens.css
+   Standalone CSS design tokens for the cosmos UI HTML package.
+   No Tailwind dependency — include in any HTML project without a build step.
+
+   Usage:
+     <link rel="stylesheet" href="css/cosmos-tokens.css">
+     <body class="cosmos-root">...</body>
+
+   Dark mode:
+     Add the `dark` class to <html> or <body>:
+     <html class="dark">
+
+   Accent override:
+     Override --color-brand-* and --color-accent on :root or .cosmos-root.
+   ========================================================================== */
+
+
+/* =============================================================================
+   1. FONT FAMILIES
+   ============================================================================= */
+
+:root {
+  --font-sans: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'VT323', 'Courier New', monospace;
+}
+
+
+/* =============================================================================
+   2. BRAND PALETTE (default: cosmos indigo)
+   Override these on :root or .cosmos-root to change the accent color.
+   ============================================================================= */
+
+:root {
+  --color-brand-25:  #f2f7ff;
+  --color-brand-50:  #ecf3ff;
+  --color-brand-100: #dde9ff;
+  --color-brand-200: #c2d6ff;
+  --color-brand-300: #9cb9ff;
+  --color-brand-400: #7592ff;
+  --color-brand-500: #465fff;
+  --color-brand-600: #3641f5;
+  --color-brand-700: #2a31d8;
+  --color-brand-800: #252dae;
+  --color-brand-900: #262e89;
+  --color-brand-950: #161950;
+}
+
+
+/* =============================================================================
+   3. GRAY PALETTE
+   ============================================================================= */
+
+:root {
+  --color-gray-25:   #fcfcfd;
+  --color-gray-50:   #f9fafb;
+  --color-gray-100:  #f2f4f7;
+  --color-gray-200:  #e4e7ec;
+  --color-gray-300:  #d0d5dd;
+  --color-gray-400:  #98a2b3;
+  --color-gray-500:  #667085;
+  --color-gray-600:  #475467;
+  --color-gray-700:  #344054;
+  --color-gray-800:  #1d2939;
+  --color-gray-900:  #101828;
+  --color-gray-950:  #0c111d;
+  --color-gray-dark: #1a2231;
+}
+
+
+/* =============================================================================
+   4. BLUE-LIGHT PALETTE
+   ============================================================================= */
+
+:root {
+  --color-blue-light-25:  #f5fbff;
+  --color-blue-light-50:  #f0f9ff;
+  --color-blue-light-100: #e0f2fe;
+  --color-blue-light-200: #b9e6fe;
+  --color-blue-light-300: #7cd4fd;
+  --color-blue-light-400: #36bffa;
+  --color-blue-light-500: #0ba5ec;
+  --color-blue-light-600: #0086c9;
+  --color-blue-light-700: #026aa2;
+  --color-blue-light-800: #065986;
+  --color-blue-light-900: #0b4a6f;
+  --color-blue-light-950: #062c41;
+}
+
+
+/* =============================================================================
+   5. ORANGE PALETTE
+   ============================================================================= */
+
+:root {
+  --color-orange-25:  #fffaf5;
+  --color-orange-50:  #fff6ed;
+  --color-orange-100: #ffead5;
+  --color-orange-200: #fddcab;
+  --color-orange-300: #feb273;
+  --color-orange-400: #fd853a;
+  --color-orange-500: #fb6514;
+  --color-orange-600: #ec4a0a;
+  --color-orange-700: #c4320a;
+  --color-orange-800: #9c2a10;
+  --color-orange-900: #7e2410;
+  --color-orange-950: #511c10;
+}
+
+
+/* =============================================================================
+   6. SEMANTIC COLOR PALETTES
+   ============================================================================= */
+
+/* Success */
+:root {
+  --color-success-25:  #f6fef9;
+  --color-success-50:  #ecfdf3;
+  --color-success-100: #d1fadf;
+  --color-success-200: #a6f4c5;
+  --color-success-300: #6ce9a6;
+  --color-success-400: #32d583;
+  --color-success-500: #12b76a;
+  --color-success-600: #039855;
+  --color-success-700: #027a48;
+  --color-success-800: #05603a;
+  --color-success-900: #054f31;
+  --color-success-950: #053321;
+}
+
+/* Error */
+:root {
+  --color-error-25:  #fffbfa;
+  --color-error-50:  #fef3f2;
+  --color-error-100: #fee4e2;
+  --color-error-200: #fecdca;
+  --color-error-300: #fda29b;
+  --color-error-400: #f97066;
+  --color-error-500: #f04438;
+  --color-error-600: #d92d20;
+  --color-error-700: #b42318;
+  --color-error-800: #912018;
+  --color-error-900: #7a271a;
+  --color-error-950: #55160c;
+}
+
+/* Warning */
+:root {
+  --color-warning-25:  #fffcf5;
+  --color-warning-50:  #fffaeb;
+  --color-warning-100: #fef0c7;
+  --color-warning-200: #fedf89;
+  --color-warning-300: #fec84b;
+  --color-warning-400: #fdb022;
+  --color-warning-500: #f79009;
+  --color-warning-600: #dc6803;
+  --color-warning-700: #b54708;
+  --color-warning-800: #93370d;
+  --color-warning-900: #7a2e0e;
+  --color-warning-950: #4e1d09;
+}
+
+/* Theme extras */
+:root {
+  --color-theme-pink-500:   #ee46bc;
+  --color-theme-purple-500: #7a5af8;
+}
+
+
+/* =============================================================================
+   7. STATUS COLORS
+   Used for health and monitoring indicators (OK / WARN / CRIT / UNKNOWN).
+   ============================================================================= */
+
+:root {
+  --color-status-ok:      #10b981;
+  --color-status-warn:    #f59e0b;
+  --color-status-crit:    #ef4444;
+  --color-status-unknown: #6b7280;
+}
+
+
+/* =============================================================================
+   8. SEMANTIC LAYOUT TOKENS
+   Applied by .cosmos-root — consumed by layout and monitoring components.
+   Light mode defaults.
+   ============================================================================= */
+
+:root {
+  --color-accent:          #465fff;
+  --color-accent-primary:  var(--color-accent);
+
+  /* Backgrounds */
+  --color-bg-base:         #f9fafb;
+  --color-bg-panel:        #ffffff;
+  --color-bg-elevated:     #ffffff;
+
+  /* Borders */
+  --color-border:          #d0d5dd;
+
+  /* Text */
+  --color-text-base:       #101828;
+  --color-text-primary:    #101828;
+  --color-text-secondary:  #667085;
+  --color-text-muted:      #98a2b3;
+  --color-text-inverse:    #ffffff;
+
+  /* Misc */
+  --color-white:           #ffffff;
+  --color-black:           #101828;
+  --color-current:         currentColor;
+  --color-transparent:     transparent;
+}
+
+
+/* =============================================================================
+   9. SHADOWS
+   ============================================================================= */
+
+:root {
+  /* Card-level shadows — heavier contrast for dark backgrounds */
+  --shadow-card:       0 1px 3px rgb(0 0 0 / 40%), 0 1px 2px rgb(0 0 0 / 30%);
+  --shadow-card-hover: 0 10px 25px rgb(0 0 0 / 50%), 0 4px 6px rgb(0 0 0 / 20%);
+
+  /* TailAdmin elevation scale */
+  --shadow-theme-xs: 0px 1px 2px 0px rgb(16 24 40 / 5%);
+  --shadow-theme-sm: 0px 1px 3px 0px rgb(16 24 40 / 10%), 0px 1px 2px 0px rgb(16 24 40 / 6%);
+  --shadow-theme-md: 0px 4px 8px -2px rgb(16 24 40 / 10%), 0px 2px 4px -2px rgb(16 24 40 / 6%);
+  --shadow-theme-lg: 0px 12px 16px -4px rgb(16 24 40 / 8%), 0px 4px 6px -2px rgb(16 24 40 / 3%);
+  --shadow-theme-xl: 0px 20px 24px -4px rgb(16 24 40 / 8%), 0px 8px 8px -4px rgb(16 24 40 / 3%);
+
+  /* Focus ring (default: indigo) */
+  --shadow-focus-ring: 0px 0px 0px 4px rgb(70 95 255 / 12%);
+
+  /* Datepicker range */
+  --shadow-datepicker: -5px 0 0 #262d3c, 5px 0 0 #262d3c;
+
+  /* Misc */
+  --shadow-slider-navigation: 0px 1px 2px 0px rgb(16 24 40 / 10%), 0px 1px 3px 0px rgb(16 24 40 / 10%);
+  --shadow-tooltip:           0px 4px 6px -2px rgb(16 24 40 / 5%), -8px 0px 20px 8px rgb(16 24 40 / 5%);
+  --drop-shadow-4xl:          0 35px 35px rgb(0 0 0 / 25%), 0 45px 65px rgb(0 0 0 / 15%);
+}
+
+
+/* =============================================================================
+   10. Z-INDEX SCALE
+   ============================================================================= */
+
+:root {
+  --z-index-1:      1;
+  --z-index-9:      9;
+  --z-index-99:     99;
+  --z-index-999:    999;
+  --z-index-9999:   9999;
+  --z-index-99999:  99999;
+  --z-index-999999: 999999;
+}
+
+
+/* =============================================================================
+   11. TYPOGRAPHY SCALE
+   ============================================================================= */
+
+:root {
+  --text-title-2xl:             72px;
+  --text-title-2xl--line-height: 90px;
+  --text-title-xl:              60px;
+  --text-title-xl--line-height:  72px;
+  --text-title-lg:              48px;
+  --text-title-lg--line-height:  60px;
+  --text-title-md:              36px;
+  --text-title-md--line-height:  44px;
+  --text-title-sm:              30px;
+  --text-title-sm--line-height:  38px;
+  --text-theme-xl:              20px;
+  --text-theme-xl--line-height:  30px;
+  --text-theme-sm:              14px;
+  --text-theme-sm--line-height:  20px;
+  --text-theme-xs:              12px;
+  --text-theme-xs--line-height:  18px;
+}
+
+
+/* =============================================================================
+   12. BREAKPOINTS (reference only — cannot be used in CSS media queries directly)
+   ============================================================================= */
+
+/*
+  --breakpoint-2xsm: 375px
+  --breakpoint-xsm:  425px
+  --breakpoint-sm:   640px
+  --breakpoint-md:   768px
+  --breakpoint-lg:   1024px
+  --breakpoint-xl:   1280px
+  --breakpoint-2xl:  1536px
+  --breakpoint-3xl:  2000px
+*/
+
+
+/* =============================================================================
+   13. .cosmos-root  —  Application shell
+   Sets font, base colors, and semantic layout tokens (light mode).
+   Applied to the outermost layout container (body or a wrapper div).
+   ============================================================================= */
+
+.cosmos-root {
+  font-family: var(--font-sans);
+  background: var(--color-bg-base);
+  color: var(--color-text-base);
+
+  --color-bg-base:        #f9fafb;
+  --color-bg-panel:       #ffffff;
+  --color-bg-elevated:    #ffffff;
+  --color-border:         #d0d5dd;
+  --color-text-base:      #101828;
+  --color-text-primary:   #101828;
+  --color-text-secondary: #667085;
+  --color-text-muted:     #98a2b3;
+  --color-text-inverse:   #ffffff;
+  --color-accent:         #465fff;
+  --color-accent-primary: #465fff;
+}
+
+
+/* =============================================================================
+   14. .cosmos-root.dark  —  Dark mode overrides
+   Activates via the `.dark` class on <html>, <body>, or .cosmos-root.
+   Semantic layout tokens switch to deep dark values (void dark theme defaults).
+   ============================================================================= */
+
+.cosmos-root.dark,
+.dark .cosmos-root,
+.dark.cosmos-root {
+  color-scheme: dark;
+  background: var(--color-bg-base);
+  color: var(--color-text-base);
+
+  /* Void dark theme defaults (deep pure black) */
+  --color-bg-base:        #0a0a0a;
+  --color-bg-panel:       #121212;
+  --color-bg-elevated:    #1a1a1a;
+  --color-border:         #333333;
+  --color-text-base:      #e5e5e5;
+  --color-text-primary:   #ffffff;
+  --color-text-secondary: #a3a3a3;
+  --color-text-muted:     #737373;
+  --color-text-inverse:   #0a0a0a;
+  --color-accent:         #465fff;
+  --color-accent-primary: #465fff;
+
+  /* Dark gray scale overrides (void palette) */
+  --color-gray-dark: #111827;
+  --color-gray-700:  #374151;
+  --color-gray-800:  #1f2937;
+  --color-gray-900:  #111827;
+  --color-gray-950:  #030712;
+}
+
+
+/* =============================================================================
+   15. .cosmos-bg-transition  —  Layout shell transition
+   Applied to structural containers so only the app shell gets the 500ms
+   theme transition — not every DOM element on the page.
+   ============================================================================= */
+
+.cosmos-bg-transition {
+  transition-property: color, background-color, border-color;
+  transition-duration: 500ms;
+  transition-timing-function: ease;
+}
+
+
+/* =============================================================================
+   16. .cosmos-sidebar  —  Sidebar collapse/expand transition
+   Width uses a faster 300ms snap; colors use 500ms for an unhurried feel.
+   ============================================================================= */
+
+.cosmos-sidebar {
+  transition:
+    width 300ms ease,
+    background-color 500ms ease,
+    border-color 500ms ease,
+    color 500ms ease;
+}
+
+
+/* =============================================================================
+   17. .cosmos-scrollbar  —  Component-level scrollbar
+   6px wide — slightly wider than the global 4px for interactive scroll areas.
+   ============================================================================= */
+
+.cosmos-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.cosmos-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cosmos-scrollbar::-webkit-scrollbar-thumb {
+  background: #e4e7ec;
+  border-radius: 3px;
+}
+
+.dark .cosmos-scrollbar::-webkit-scrollbar-thumb,
+.cosmos-root.dark .cosmos-scrollbar::-webkit-scrollbar-thumb {
+  background: #344054;
+}
+
+.cosmos-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #d0d5dd;
+}
+
+.dark .cosmos-scrollbar::-webkit-scrollbar-thumb:hover,
+.cosmos-root.dark .cosmos-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #475467;
+}
+
+
+/* =============================================================================
+   18. GLOBAL THIN SCROLLBAR  —  4px unobtrusive default
+   ============================================================================= */
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}

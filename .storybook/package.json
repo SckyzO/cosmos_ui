@@ -1,0 +1,34 @@
+{
+  "name": "cosmos-storybook",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "storybook": "storybook dev --port 6006 --host 0.0.0.0 --no-open",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "@fontsource/outfit": "^5.1.1",
+    "@fontsource/vt323": "^5.2.7",
+    "@tailwindcss/vite": "^4.1.18",
+    "lucide-react": "^0.562.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^8.6.0",
+    "@storybook/addon-interactions": "^8.6.0",
+    "@storybook/addon-a11y": "^8.6.0",
+    "@storybook/blocks": "^8.6.0",
+    "@storybook/react": "^8.6.0",
+    "@storybook/react-vite": "^8.6.0",
+    "@storybook/test": "^8.6.0",
+    "@storybook/theming": "^8.6.0",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "storybook": "^8.6.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.2.4"
+  }
+}

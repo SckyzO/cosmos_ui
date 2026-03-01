@@ -1,0 +1,28 @@
+services:
+  demo:
+    build:
+      context: ./demo
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./demo:/app
+      - ./packages/react/src:/app/src/cosmos
+      - ./styles:/app/styles
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+  storybook:
+    build:
+      context: .
+      dockerfile: Dockerfile.storybook
+    ports:
+      - "6006:6006"
+    volumes:
+      - ./packages/react/src:/app/packages/react/src
+      - ./styles:/app/styles
+      - ./.storybook:/app/.storybook
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true

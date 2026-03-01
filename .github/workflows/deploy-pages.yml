@@ -1,14 +1,13 @@
-name: Deploy Storybook to GitHub Pages
+name: Deploy cosmos_ui to GitHub Pages
 
 on:
   push:
     branches:
       - main
     paths:
-      - '.storybook/**'
-      - 'packages/react/src/**'
+      - 'packages/html/**'
       - 'styles/**'
-      - '.github/workflows/deploy-storybook.yml'
+      - '.github/workflows/deploy-pages.yml'
   workflow_dispatch:
 
 permissions:
@@ -22,7 +21,7 @@ concurrency:
 
 jobs:
   build:
-    name: Build Storybook
+    name: Build HTML site
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,22 +32,18 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install Storybook dependencies
-        working-directory: .storybook
+      - name: Install dependencies
+        working-directory: packages/html
         run: npm install --legacy-peer-deps
 
-      - name: Build Storybook static site
-        # Run from .storybook/ so Node.js resolves storybook/* from .storybook/node_modules.
-        # --config-dir . tells Storybook to look for main.ts in the CWD (.storybook/).
-        working-directory: .storybook
-        env:
-          NODE_OPTIONS: --max-old-space-size=4096
-        run: npm run build-storybook -- --config-dir . --output-dir ../storybook-static
+      - name: Build HTML site
+        working-directory: packages/html
+        run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: storybook-static
+          path: packages/html/build
 
   deploy:
     name: Deploy to GitHub Pages

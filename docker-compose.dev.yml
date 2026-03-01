@@ -20,16 +20,17 @@ services:
     ports:
       - "6006:6006"
     volumes:
-      # Source: component files mounted at the same relative path as in the repo
-      # so path.resolve(__dirname, '../packages/react/src') resolves correctly
+      # WORKDIR is /app/.storybook — node_modules live there.
+      # Source files are mounted directly into the WORKDIR.
+      # __dirname in main.ts = /app/.storybook (same as node_modules parent).
       - ./packages/react/src:/app/packages/react/src
       - ./styles:/app/styles
-      # Config: stories, main.ts, preview.tsx (hot-reload)
+      # Config files mounted INTO the WORKDIR (not a subdirectory)
       - ./.storybook/stories:/app/.storybook/stories
       - ./.storybook/main.ts:/app/.storybook/main.ts
       - ./.storybook/preview.tsx:/app/.storybook/preview.tsx
       - ./.storybook/global.css:/app/.storybook/global.css
       - ./.storybook/cosmos-theme.ts:/app/.storybook/cosmos-theme.ts
-      - /app/node_modules
+      - /app/.storybook/node_modules
     environment:
       - CHOKIDAR_USEPOLLING=true

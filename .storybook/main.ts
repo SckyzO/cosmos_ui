@@ -46,6 +46,10 @@ const config: StorybookConfig = {
 
     return mergeConfig(config, {
       plugins: [tailwindcss()],
+      // Set root to the config dir (.storybook/) so Vite's module resolver
+      // looks in .storybook/node_modules/ first — this is where storybook,
+      // @storybook/*, react, tailwindcss etc. are installed.
+      root: __dirname,
       resolve: {
         alias: {
           '@cosmos': cosmosRoot,

@@ -18,7 +18,11 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "paths": {
+      "@cosmos/*": ["./src/cosmos/*"],
+      "@cosmos-styles/*": ["../styles/*"]
+    }
   },
   "include": ["src"]
 }

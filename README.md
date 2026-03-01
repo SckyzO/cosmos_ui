@@ -2,9 +2,10 @@
 
 **A complete design system & UI kit built on TailAdmin + Tailwind CSS v4.**
 
-Dark mode first-class, accent colors, comprehensive component library — available as React components and pure HTML templates.
+Dark mode first-class, 5 accent colors, 8 color palettes, 48+ components — React components, pure HTML templates, and interactive Storybook documentation.
 
 [![Storybook](https://img.shields.io/badge/Storybook-Live-FF4785?logo=storybook&logoColor=white)](https://sckyzo.github.io/cosmos_ui/)
+[![Deploy Storybook](https://github.com/SckyzO/cosmos_ui/actions/workflows/deploy-storybook.yml/badge.svg)](https://github.com/SckyzO/cosmos_ui/actions/workflows/deploy-storybook.yml)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Tailwind CSS](https://img.shields.io/badge/tailwindcss-v4-06B6D4.svg)
 ![React](https://img.shields.io/badge/react-19-61DAFB.svg)
@@ -13,14 +14,21 @@ Dark mode first-class, accent colors, comprehensive component library — availa
 
 ---
 
-## Features
+## What is cosmos_ui?
 
-- **Dark mode first** — system-aware + manual toggle + accent colors
-- **React components** — fully typed TypeScript components
-- **HTML templates** — pure HTML + compiled CSS, zero framework dependency
-- **Storybook 8** — interactive component documentation
-- **Tailwind CSS v4** — latest utility-first CSS
-- **Docker-based dev** — no local Node.js required
+cosmos_ui is a production-ready design system for building modern web applications. It extends [TailAdmin Free](https://github.com/TailAdmin/tailadmin-free-tailwind-dashboard-template) with a complete theme engine, React component library, and Storybook documentation.
+
+**Key features:**
+- **5 accent colors** × **4 dark palettes** × **4 light palettes** = 80 theme combinations
+- **48+ UI components** across 8 categories
+- **15 chart types** powered by ApexCharts
+- **Dark mode first** — designed for NOC and developer environments
+- **Matrix mode** — retro terminal aesthetic
+- **React 19** + **Tailwind CSS v4** + **Vite 7**
+- **Storybook 8** — interactive component documentation deployed to GitHub Pages
+- **HTML templates** — zero-framework CSS for any backend
+
+---
 
 ## Quick Start
 
@@ -30,52 +38,78 @@ cd cosmos_ui
 make up
 ```
 
-| Service | URL |
-|---------|-----|
-| **Demo app** | http://localhost:5173 |
-| **Storybook** | http://localhost:6006 |
+| Service | URL | Description |
+|---------|-----|-------------|
+| **Demo app** | http://localhost:5174 | Full interactive showcase |
+| **Storybook** | http://localhost:6006 | Component stories + docs |
+
+---
 
 ## Structure
 
 ```
-packages/
-├── react/    ← React + TypeScript components
-└── html/     ← Pure HTML templates + compiled CSS (based on TailAdmin free)
-demo/         ← Interactive showcase app (React)
-.storybook/   ← Storybook configuration
-styles/       ← Shared CSS tokens (design variables)
+cosmos_ui/
+├── packages/
+│   ├── react/     ← React + TypeScript components (@cosmos/ui)
+│   └── html/      ← Pure HTML templates + CSS tokens
+├── demo/          ← Vite showcase app (all 48+ components)
+├── .storybook/    ← Storybook 8 configuration + stories
+└── styles/        ← Shared CSS design tokens
 ```
 
-## Commands
+---
+
+## Components
+
+| Category | Count | Examples |
+|----------|-------|---------|
+| Components | 10 | Buttons, Badges, Cards, Modals, Drawers |
+| Forms | 4 | Form Elements, OTP, Range Slider, Tag Input |
+| Charts | 15 | Line/Area, Bar, Donut, Heatmap, Realtime, Radial |
+| Data Display | 6 | Stats Cards, Tables, Avatars, Ribbons |
+| Navigation | 5 | Tabs, Pagination, Breadcrumb, Accordion, Stepper |
+| Feedback | 5 | Toast, Spinners, Skeleton, Progress, Empty State |
+| Advanced | 4 | Timeline, Carousel, Notifications, Calendar |
+| Pages | 6 | Charts, Tables, Profile, Sign In, Sign Up, 404 |
+
+---
+
+## Theme System
+
+```tsx
+import { ThemeProvider, useTheme } from '@cosmos/contexts/ThemeContext';
+
+function App() {
+  const { setMode, setAccent, setDarkTheme } = useTheme();
+  setMode('dark');
+  setAccent('indigo');    // indigo | violet | emerald | rose | amber
+  setDarkTheme('matrix'); // void | navy | forest | matrix
+}
+```
+
+---
+
+## Development Commands
 
 ```bash
-make up              # Start all services (demo + storybook)
+make up              # Start all services
 make down            # Stop
 make logs            # Follow logs
-make lint            # Run all linters (ESLint + Stylelint + Prettier)
-make storybook-build # Build static Storybook for deployment
+make build           # Rebuild containers
+make lint            # ESLint + Stylelint + Prettier
+make storybook-build # Build static Storybook
 ```
 
-## Packages
+---
 
-### `packages/react`
-React + TypeScript component library. Components are organized by category:
-- **ui/** — Base elements (Button, Badge, Input, Select, Checkbox...)
-- **layout/** — CosmosLayout, CosmosSidebar, CosmosHeader
-- **feedback/** — Toast, Alert, Skeleton, EmptyState, OfflineBanner
-- **data/** — DataTable, Chart wrappers, KPI cards
-- **overlay/** — Modal, Drawer, Popover, Tooltip
+## GitHub Pages
 
-### `packages/html`
-Pure HTML templates with compiled `cosmos.css`. No JavaScript framework required.
-Usable in any project: PHP, Django, Rails, Go templates, or plain HTML.
+Storybook is automatically deployed to GitHub Pages on every push to `main`:
 
-```html
-<link rel="stylesheet" href="cosmos.css">
-<div class="cosmos-sidebar">...</div>
-```
+→ **https://sckyzo.github.io/cosmos_ui/**
+
+---
 
 ## Based on
 
 [TailAdmin Free v2.0.1](https://github.com/TailAdmin/tailadmin-free-tailwind-dashboard-template) — MIT License.
-Enhanced with a complete theme system, improved sidebar, React component library, and Storybook documentation.
